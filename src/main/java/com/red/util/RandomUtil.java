@@ -1,4 +1,4 @@
-package com.red.utill;
+package com.red.util;
 
 import java.util.List;
 import java.util.OptionalInt;
@@ -15,14 +15,13 @@ public class RandomUtil {
     private static final Random RANDOM = new Random();
 
     /**
-     * Gets a random list item from min(inclusive) to max(exclusive) index.
+     * Gets a random list item.
      *
      * @param list
      * @param <T>
      * @return
      */
     public static <T> T getRandomItem(List<T> list) {
-
         if (list == null || list.isEmpty()) {
             throw new IllegalArgumentException("list must be not null or empty");
         }
@@ -33,20 +32,20 @@ public class RandomUtil {
         /**
          *  Возвращает значание или бросает исключение
          */
-        int index = optionalInt.getAsInt();
+        int index = optionalInt.orElseThrow(IllegalArgumentException::new);
         return list.get(index);
     }
 
     /**
      * Gets a random list item from min(inclusive) to max(exclusive) index.
      *
-     * @param list
      * @param min
      * @param max
+     * @param list
      * @param <T>
      * @return
      */
-    public static <T> T getRandomItem(List<T> list, int min, int max) {
+    public static <T> T getRandomItem(int min, int max, List<T> list) {
 
         if (list == null || list.isEmpty()) {
             throw new IllegalArgumentException("list must be not null or empty");
@@ -65,7 +64,7 @@ public class RandomUtil {
         /**
          *  Возвращает значание или бросает исключение
          */
-        int index = optionalInt.getAsInt();
+        int index = optionalInt.orElseThrow(IllegalArgumentException::new);
         return list.get(index);
     }
 

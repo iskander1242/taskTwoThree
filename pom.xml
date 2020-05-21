@@ -54,7 +54,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.red.util.Runner</mainClass>
+                            <mainClass>com.red.util.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -51,7 +51,7 @@ public class RandomUtil {
             throw new IllegalArgumentException("list must be not null or empty");
         }
         if (min < 0 || min >= max) {
-            throw new IllegalArgumentException("max must be greater than min and min must be greater than zero");
+            throw new IllegalArgumentException("max must be greater than min and min must be greater or equal to zero");
         }
         if (max > list.size()) {
             throw new IllegalArgumentException("max must be less then list size");
@@ -79,7 +79,7 @@ public class RandomUtil {
     public static int getRandomPositive(int min, int max) {
 
         if (min < 0 || min >= max) {
-            throw new IllegalArgumentException("max must be greater than min and min must be greater than zero");
+            throw new IllegalArgumentException("max must be greater than min and min must be greater or equal to zero");
         }
         return RANDOM.nextInt((max - min)) + min;
     }

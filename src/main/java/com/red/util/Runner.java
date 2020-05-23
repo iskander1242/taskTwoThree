@@ -1,7 +1,20 @@
 package com.red.util;
 
+import com.red.util.exception.RandomWrapperException;
+
 import java.util.List;
 import java.util.Scanner;
+
+import static com.red.util.Messages.DATA_INPUT_ERROR;
+import static com.red.util.Messages.ENTER_STRING_LIKE_1_10;
+import static com.red.util.Messages.ENTER_STRING_LIKE_1_10_OR_CTRL_C_FOR_EXIT;
+import static com.red.util.Messages.ENTER_STRING_LIKE_1_10_STRING_1_STRING_2;
+import static com.red.util.Messages.ENTER_STRING_LIKE_1_10_STRING_1_STRING_2_OR_CTRL_C_FOR_EXIT;
+import static com.red.util.Messages.ENTER_STRING_LIKE_STRING_1_STRING_2;
+import static com.red.util.Messages.ENTER_STRING_LIKE_STRING_1_STRING_2_OR_CTRL_C_FOR_EXIT;
+import static com.red.util.Messages.RANDOM_LIST_ITEM;
+import static com.red.util.Messages.RANDOM_LIST_ITEM_FROM_MIN_INCLUSIVE_TO_MAX_EXCLUSIVE_INDEX;
+import static com.red.util.Messages.RANDOM_POSITIVE_INTEGER_FROM_MIN_INCLUSIVE_TO_MAX_EXCLUSIVE_COMPATIBLE_WITH_JAVA_7;
 
 /**
  * Class runner for getting and print random value.
@@ -11,9 +24,8 @@ import java.util.Scanner;
  */
 public class Runner {
 
-    private final String DELIMITER = "\\s+";
-    private final String WARNING = "Warning data input error: ";
-    private final String RANDOM = "Random: ";
+    public static final String DELIMITER = "\\s+";
+    public static final String RANDOM = "Random: ";
 
     public static void main(String[] args) {
         new Runner().input();
@@ -26,9 +38,9 @@ public class Runner {
 
         try (Scanner scanner = new Scanner(System.in)) {
 
-            System.out.println("1\t Gets a random list item");
-            System.out.println("2\t Gets a random list item from min(inclusive) to max(exclusive) index");
-            System.out.println("3\t Generates a random positive integer from min(inclusive) to max(exclusive), compatible with Java 7");
+            System.out.println(RANDOM_LIST_ITEM);
+            System.out.println(RANDOM_LIST_ITEM_FROM_MIN_INCLUSIVE_TO_MAX_EXCLUSIVE_INDEX);
+            System.out.println(RANDOM_POSITIVE_INTEGER_FROM_MIN_INCLUSIVE_TO_MAX_EXCLUSIVE_COMPATIBLE_WITH_JAVA_7);
 
             System.out.println("Please enter your choice:...");
 
@@ -55,22 +67,22 @@ public class Runner {
 
     private void printRandomListItem(Scanner scanner) {
 
-        System.out.println("Please enter string like string1 string2...");
+        System.out.println(ENTER_STRING_LIKE_STRING_1_STRING_2);
 
         while (scanner.hasNextLine()) {
             try {
 
                 System.out.println(RANDOM + RandomUtil.getRandomItem(readLine(scanner)));
             } catch (Exception e) {
-                System.out.println(WARNING + e.getMessage());
+                System.out.println(DATA_INPUT_ERROR + e.getMessage());
             }
-            System.out.println("Please enter string like string1 string2... or Ctrl+C for exit");
+            System.out.println(ENTER_STRING_LIKE_STRING_1_STRING_2_OR_CTRL_C_FOR_EXIT);
         }
     }
 
     private void printRandomListItemFromRange(Scanner scanner) {
         List<String> paramList;
-        System.out.println("Please enter string like 1 10 string1 string2...");
+        System.out.println(ENTER_STRING_LIKE_1_10_STRING_1_STRING_2);
 
         while (scanner.hasNextLine()) {
             try {
@@ -83,16 +95,16 @@ public class Runner {
 
                 System.out.println(RANDOM + random);
             } catch (Exception e) {
-                System.out.println(WARNING + e.getMessage());
+                System.out.println(DATA_INPUT_ERROR + e.getMessage());
             }
-            System.out.println("Please enter string like 1 10 string1 string2... or Ctrl+C for exit");
+            System.out.println(ENTER_STRING_LIKE_1_10_STRING_1_STRING_2_OR_CTRL_C_FOR_EXIT);
         }
     }
 
     private void printRandomIntFromRange(Scanner scanner) {
 
         List<String> paramList;
-        System.out.println("Please enter string like 1 10");
+        System.out.println(ENTER_STRING_LIKE_1_10);
 
         while (scanner.hasNextLine()) {
             try {
@@ -101,9 +113,9 @@ public class Runner {
                 System.out.println(RANDOM + RandomUtil.getRandomPositive(Integer.parseInt(paramList.get(0)),
                         Integer.parseInt(paramList.get(1))));
             } catch (Exception e) {
-                System.out.println(WARNING + e.getMessage());
+                System.out.println(DATA_INPUT_ERROR + e.getMessage());
             }
-            System.out.println("Please enter string like 1 10 or Ctrl+C for exit");
+            System.out.println(ENTER_STRING_LIKE_1_10_OR_CTRL_C_FOR_EXIT);
         }
     }
 
@@ -111,7 +123,7 @@ public class Runner {
 
         final String line = scanner.nextLine();
         if (line.isEmpty()) {
-            throw new IllegalArgumentException("String must not be empty");
+            throw new RandomWrapperException(Messages.STRING_MUST_NOT_BE_EMPTY);
         }
         return List.of(line.split(DELIMITER));
     }

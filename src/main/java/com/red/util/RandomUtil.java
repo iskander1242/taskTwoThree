@@ -1,8 +1,14 @@
 package com.red.util;
 
+import com.red.util.exception.RandomWrapperException;
+
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.Random;
+
+import static com.red.util.Messages.LIST_RESTRICTION;
+import static com.red.util.Messages.MAX_BOUND;
+import static com.red.util.Messages.MAX_MUST_BE_GREATER_OR_EQUAL_TO_ZERO;
 
 /**
  * Class helper for getting random value.
@@ -14,10 +20,6 @@ public class RandomUtil {
 
     private static final Random RANDOM = new Random();
 
-    private static final String MAX_BOUND = "max must be less then list size";
-    private static final String LIST_RESTRICTION = "list must be not null or empty";
-    private static final String MAX_MUST_BE_GREATER_OR_EQUAL_TO_ZERO = "max must be greater than min and min must be greater or equal to zero";
-
     /**
      * Gets a random list item.
      *
@@ -27,7 +29,7 @@ public class RandomUtil {
      */
     public static <T> T getRandomItem(List<T> list) {
         if (list == null || list.isEmpty()) {
-            throw new IllegalArgumentException(LIST_RESTRICTION);
+            throw new RandomWrapperException(LIST_RESTRICTION);
         }
         /**
          *  Возвращает OptionalInt
@@ -36,7 +38,7 @@ public class RandomUtil {
         /**
          *  Возвращает значание или бросает исключение
          */
-        int index = optionalInt.orElseThrow(IllegalArgumentException::new);
+        int index = optionalInt.orElseThrow(RandomWrapperException::new);
         return list.get(index);
     }
 
@@ -52,13 +54,13 @@ public class RandomUtil {
     public static <T> T getRandomItem(int min, int max, List<T> list) {
 
         if (list == null || list.isEmpty()) {
-            throw new IllegalArgumentException(LIST_RESTRICTION);
+            throw new RandomWrapperException(LIST_RESTRICTION);
         }
         if (min < 0 || min >= max) {
-            throw new IllegalArgumentException(MAX_MUST_BE_GREATER_OR_EQUAL_TO_ZERO);
+            throw new RandomWrapperException(MAX_MUST_BE_GREATER_OR_EQUAL_TO_ZERO);
         }
         if (max > list.size()) {
-            throw new IllegalArgumentException(MAX_BOUND);
+            throw new RandomWrapperException(MAX_BOUND);
         }
 
         /**
@@ -68,7 +70,7 @@ public class RandomUtil {
         /**
          *  Возвращает значание или бросает исключение
          */
-        int index = optionalInt.orElseThrow(IllegalArgumentException::new);
+        int index = optionalInt.orElseThrow(RandomWrapperException::new);
         return list.get(index);
     }
 
@@ -83,7 +85,7 @@ public class RandomUtil {
     public static int getRandomPositive(int min, int max) {
 
         if (min < 0 || min >= max) {
-            throw new IllegalArgumentException(MAX_MUST_BE_GREATER_OR_EQUAL_TO_ZERO);
+            throw new RandomWrapperException(MAX_MUST_BE_GREATER_OR_EQUAL_TO_ZERO);
         }
         return RANDOM.nextInt((max - min)) + min;
     }

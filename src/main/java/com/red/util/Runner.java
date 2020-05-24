@@ -1,6 +1,8 @@
 package com.red.util;
 
 import com.red.util.exception.RandomWrapperException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Scanner;
@@ -27,6 +29,8 @@ public class Runner {
     public static final String DELIMITER = "\\s+";
     public static final String RANDOM = "Random: ";
 
+    private static final Logger logger = LogManager.getLogger(Runner.class);
+
     public static void main(String[] args) {
         new Runner().input();
     }
@@ -38,11 +42,11 @@ public class Runner {
 
         try (Scanner scanner = new Scanner(System.in)) {
 
-            System.out.println(RANDOM_LIST_ITEM);
-            System.out.println(RANDOM_LIST_ITEM_FROM_MIN_INCLUSIVE_TO_MAX_EXCLUSIVE_INDEX);
-            System.out.println(RANDOM_POSITIVE_INTEGER_FROM_MIN_INCLUSIVE_TO_MAX_EXCLUSIVE_COMPATIBLE_WITH_JAVA_7);
+            logger.info(RANDOM_LIST_ITEM);
+            logger.info(RANDOM_LIST_ITEM_FROM_MIN_INCLUSIVE_TO_MAX_EXCLUSIVE_INDEX);
+            logger.info(RANDOM_POSITIVE_INTEGER_FROM_MIN_INCLUSIVE_TO_MAX_EXCLUSIVE_COMPATIBLE_WITH_JAVA_7);
 
-            System.out.println("Please enter your choice:...");
+            logger.info("Please enter your choice:...");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -58,31 +62,31 @@ public class Runner {
                     printRandomIntFromRange(scanner);
                     break;
                 default:
-                    System.out.println("Invalid choice");
+                    logger.info("Invalid choice");
             }
         } finally {
-            System.out.println("System fail. Rerun your app");
+            logger.info("System fail. Rerun your app");
         }
     }
 
     private void printRandomListItem(Scanner scanner) {
 
-        System.out.println(ENTER_STRING_LIKE_STRING_1_STRING_2);
+        logger.info(ENTER_STRING_LIKE_STRING_1_STRING_2);
 
         while (scanner.hasNextLine()) {
             try {
 
-                System.out.println(RANDOM + RandomUtil.getRandomItem(readLine(scanner)));
+                logger.info(RANDOM + RandomUtil.getRandomItem(readLine(scanner)));
             } catch (Exception e) {
-                System.out.println(DATA_INPUT_ERROR + e.getMessage());
+                logger.info(DATA_INPUT_ERROR + e.getMessage());
             }
-            System.out.println(ENTER_STRING_LIKE_STRING_1_STRING_2_OR_CTRL_C_FOR_EXIT);
+            logger.info(ENTER_STRING_LIKE_STRING_1_STRING_2_OR_CTRL_C_FOR_EXIT);
         }
     }
 
     private void printRandomListItemFromRange(Scanner scanner) {
         List<String> paramList;
-        System.out.println(ENTER_STRING_LIKE_1_10_STRING_1_STRING_2);
+        logger.info(ENTER_STRING_LIKE_1_10_STRING_1_STRING_2);
 
         while (scanner.hasNextLine()) {
             try {
@@ -93,29 +97,29 @@ public class Runner {
                         Integer.parseInt(paramList.get(1)),
                         paramList.subList(2, paramList.size()));
 
-                System.out.println(RANDOM + random);
+                logger.info(RANDOM + random);
             } catch (Exception e) {
-                System.out.println(DATA_INPUT_ERROR + e.getMessage());
+                logger.info(DATA_INPUT_ERROR + e.getMessage());
             }
-            System.out.println(ENTER_STRING_LIKE_1_10_STRING_1_STRING_2_OR_CTRL_C_FOR_EXIT);
+            logger.info(ENTER_STRING_LIKE_1_10_STRING_1_STRING_2_OR_CTRL_C_FOR_EXIT);
         }
     }
 
     private void printRandomIntFromRange(Scanner scanner) {
 
         List<String> paramList;
-        System.out.println(ENTER_STRING_LIKE_1_10);
+        logger.info(ENTER_STRING_LIKE_1_10);
 
         while (scanner.hasNextLine()) {
             try {
                 paramList = readLine(scanner);
 
-                System.out.println(RANDOM + RandomUtil.getRandomPositive(Integer.parseInt(paramList.get(0)),
+                logger.info(RANDOM + RandomUtil.getRandomPositive(Integer.parseInt(paramList.get(0)),
                         Integer.parseInt(paramList.get(1))));
             } catch (Exception e) {
-                System.out.println(DATA_INPUT_ERROR + e.getMessage());
+                logger.info(DATA_INPUT_ERROR + e.getMessage());
             }
-            System.out.println(ENTER_STRING_LIKE_1_10_OR_CTRL_C_FOR_EXIT);
+            logger.info(ENTER_STRING_LIKE_1_10_OR_CTRL_C_FOR_EXIT);
         }
     }
 

@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.red.util.Messages.DATA_INPUT_ERROR;
 import static com.red.util.Messages.ENTER_STRING_LIKE_1_10;
 import static com.red.util.Messages.ENTER_STRING_LIKE_1_10_OR_CTRL_C_FOR_EXIT;
 import static com.red.util.Messages.ENTER_STRING_LIKE_1_10_STRING_1_STRING_2;
@@ -17,6 +16,7 @@ import static com.red.util.Messages.ENTER_STRING_LIKE_STRING_1_STRING_2_OR_CTRL_
 import static com.red.util.Messages.RANDOM_LIST_ITEM;
 import static com.red.util.Messages.RANDOM_LIST_ITEM_FROM_MIN_INCLUSIVE_TO_MAX_EXCLUSIVE_INDEX;
 import static com.red.util.Messages.RANDOM_POSITIVE_INTEGER_FROM_MIN_INCLUSIVE_TO_MAX_EXCLUSIVE_COMPATIBLE_WITH_JAVA_7;
+import static com.red.util.Messages.STRING_MUST_NOT_BE_EMPTY;
 
 /**
  * Class runner for getting and print random value.
@@ -71,35 +71,37 @@ public class Runner {
 
     private void printRandomListItem(Scanner scanner) {
 
-        logger.info(ENTER_STRING_LIKE_STRING_1_STRING_2);
+        String randomListItem;
 
+        logger.info(ENTER_STRING_LIKE_STRING_1_STRING_2);
         while (scanner.hasNextLine()) {
             try {
-
-                logger.info(RANDOM + RandomUtil.getRandomItem(readLine(scanner)));
+                randomListItem = RandomUtil.getRandomItem(readLine(scanner));
+                logger.info(RANDOM + randomListItem);
             } catch (Exception e) {
-                logger.info(DATA_INPUT_ERROR + e.getMessage());
+                logger.warn(e);
             }
             logger.info(ENTER_STRING_LIKE_STRING_1_STRING_2_OR_CTRL_C_FOR_EXIT);
         }
     }
 
     private void printRandomListItemFromRange(Scanner scanner) {
-        List<String> paramList;
-        logger.info(ENTER_STRING_LIKE_1_10_STRING_1_STRING_2);
 
+        String randomListItem;
+        List<String> paramList;
+
+        logger.info(ENTER_STRING_LIKE_1_10_STRING_1_STRING_2);
         while (scanner.hasNextLine()) {
             try {
                 paramList = readLine(scanner);
 
-                String random = RandomUtil.getRandomItem(
+                randomListItem = RandomUtil.getRandomItem(
                         Integer.parseInt(paramList.get(0)),
                         Integer.parseInt(paramList.get(1)),
                         paramList.subList(2, paramList.size()));
-
-                logger.info(RANDOM + random);
+                logger.info(RANDOM + randomListItem);
             } catch (Exception e) {
-                logger.info(DATA_INPUT_ERROR + e.getMessage());
+                logger.warn(e);
             }
             logger.info(ENTER_STRING_LIKE_1_10_STRING_1_STRING_2_OR_CTRL_C_FOR_EXIT);
         }
@@ -107,17 +109,19 @@ public class Runner {
 
     private void printRandomIntFromRange(Scanner scanner) {
 
+        int randomPositive;
         List<String> paramList;
-        logger.info(ENTER_STRING_LIKE_1_10);
 
+        logger.info(ENTER_STRING_LIKE_1_10);
         while (scanner.hasNextLine()) {
             try {
                 paramList = readLine(scanner);
 
-                logger.info(RANDOM + RandomUtil.getRandomPositive(Integer.parseInt(paramList.get(0)),
-                        Integer.parseInt(paramList.get(1))));
+                randomPositive = RandomUtil.getRandomPositive(Integer.parseInt(paramList.get(0)),
+                        Integer.parseInt(paramList.get(1)));
+                logger.info(RANDOM + randomPositive);
             } catch (Exception e) {
-                logger.info(DATA_INPUT_ERROR + e.getMessage());
+                logger.warn(e);
             }
             logger.info(ENTER_STRING_LIKE_1_10_OR_CTRL_C_FOR_EXIT);
         }
@@ -127,7 +131,7 @@ public class Runner {
 
         final String line = scanner.nextLine();
         if (line.isEmpty()) {
-            throw new RandomWrapperException(Messages.STRING_MUST_NOT_BE_EMPTY);
+            throw new RandomWrapperException(STRING_MUST_NOT_BE_EMPTY);
         }
         return List.of(line.split(DELIMITER));
     }

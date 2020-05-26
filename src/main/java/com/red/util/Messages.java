@@ -19,7 +19,7 @@ public enum Messages {
     /**
      * Runner warnings
      */
-    DATA_INPUT_ERROR("Warning data input error: "),
+    DATA_INPUT_ERROR("Warning! Data input error: "),
     STRING_MUST_NOT_BE_EMPTY("String must not be empty"),
     /**
      * Menu

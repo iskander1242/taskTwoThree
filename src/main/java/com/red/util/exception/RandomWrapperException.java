@@ -16,4 +16,9 @@ public class RandomWrapperException extends IllegalArgumentException {
 
     public RandomWrapperException() {
     }
+
+    @Override
+    public String toString() {
+        return Messages.DATA_INPUT_ERROR + super.getMessage();
+    }
 }
